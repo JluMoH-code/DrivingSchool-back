@@ -1,0 +1,108 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Driving School API",
+        "description": "Description of Driving School API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Вход",
+                "operationId": "b3f029a14629aeb7d5a705cff394e48d",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "get": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Выход",
+                "operationId": "655d6b4d4a6499b98391f5e52a0adb3f",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/sanctum/csrf-cookie": {
+            "get": {
+                "tags": [
+                    "csrf"
+                ],
+                "summary": "Метод для записи csrf куки в браузер",
+                "operationId": "e8dc1d9355c514153c492a692ac1f572",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UserRole": {
+                "description": "Роль пользователя\n        student: Ученик,\n        instructor: Инструктор,\n        admin: Админ",
+                "type": "string",
+                "enum": [
+                    "student",
+                    "instructor",
+                    "admin"
+                ],
+                "x-enum-varnames": [
+                    "STUDENT",
+                    "INSTRUCTOR",
+                    "ADMIN"
+                ]
+            },
+            "AuthRequest": {
+                "properties": {
+                    "pernumber": {
+                        "type": "string",
+                        "example": "100000000"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "auth",
+            "description": "auth"
+        },
+        {
+            "name": "csrf",
+            "description": "csrf"
+        }
+    ]
+}
