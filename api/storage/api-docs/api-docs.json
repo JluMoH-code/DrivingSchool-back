@@ -62,6 +62,27 @@
                     }
                 }
             }
+        },
+        "/api/profile": {
+            "get": {
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Показ информации о текущем авторизованном пользователе",
+                "operationId": "03cf4eee24834360232ff2cf06b3077e",
+                "responses": {
+                    "200": {
+                        "description": "Информация о пользователе",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProfileResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -92,6 +113,34 @@
                     }
                 },
                 "type": "object"
+            },
+            "ProfileResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "pernumber": {
+                        "type": "number",
+                        "example": "100000000"
+                    },
+                    "phone": {
+                        "type": "number",
+                        "example": "79999999999"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Name Name"
+                    },
+                    "role": {
+                        "$ref": "#/components/schemas/UserRole"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -103,6 +152,10 @@
         {
             "name": "csrf",
             "description": "csrf"
+        },
+        {
+            "name": "profile",
+            "description": "profile"
         }
     ]
 }
