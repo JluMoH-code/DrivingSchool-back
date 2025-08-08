@@ -14,11 +14,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory()->create(['pernumber' => '100000000', 'role' => 'admin']);
+        User::factory()->create(['pernumber' => '100000001', 'role' => 'instructor']);
+        User::factory()->create(['pernumber' => '100000002', 'role' => 'student']);
 
-        User::factory()->create([
-            'pernumber' => '100000000',
-            'role' => 'admin',
+        User::factory()->count(5)->create(['role' => 'instructor']);
+        User::factory()->count(10)->create(['role' => 'student']);
+
+        $this->call([
+            InstructorSeeder::class,
+            CarSeeder::class,
+            SlotSeeder::class,
+            DrivingSessionSeeder::class,
         ]);
     }
 }
