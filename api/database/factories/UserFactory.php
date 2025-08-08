@@ -25,11 +25,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'pernumber' => fake()->numberBetween(100000000, 999999999),
             'name' => fake()->name(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'role' => fake()->randomElement(UserRole::values()),
-            'phone' => '79999999999',
+            'phone' => '7' . $this->faker->numberBetween(1000000000, 9999999999),
         ];
     }
 }
