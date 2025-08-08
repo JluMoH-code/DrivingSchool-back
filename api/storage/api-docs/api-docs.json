@@ -83,10 +83,92 @@
                     }
                 }
             }
+        },
+        "/api/slots": {
+            "get": {
+                "tags": [
+                    "slots"
+                ],
+                "summary": "Показ всех слотов",
+                "operationId": "1520c9aae027b84cd6086f13a2b06449",
+                "responses": {
+                    "200": {
+                        "description": "Список задач",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SlotResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "DrivingSessionStatus": {
+                "description": "Статус занятия\n        reservation: Забронировано,\n        completed: Закончено,\n        canceled: Отменено",
+                "type": "string",
+                "enum": [
+                    "reservation",
+                    "completed",
+                    "canceled"
+                ],
+                "x-enum-varnames": [
+                    "RESERVATION",
+                    "COMPLETED",
+                    "CANCELED"
+                ]
+            },
+            "SessionCommentType": {
+                "description": "Тип комментарий к занятию\n        pre: До занятия,\n        post: После занятие",
+                "type": "string",
+                "enum": [
+                    "pre",
+                    "post"
+                ],
+                "x-enum-varnames": [
+                    "PRE",
+                    "POST"
+                ]
+            },
+            "SlotStatus": {
+                "description": "Статус слота\n        available: Доступно к бронированию,\n        reservation: Забронирован,\n        completed: Закончен,\n        blocked: Заблокирован",
+                "type": "string",
+                "enum": [
+                    "available",
+                    "reservation",
+                    "completed",
+                    "blocked"
+                ],
+                "x-enum-varnames": [
+                    "AVAILABLE",
+                    "RESERVATION",
+                    "COMPLETED",
+                    "BLOCKED"
+                ]
+            },
+            "Transmission": {
+                "description": "Тип трансмиссии авто\n        mt: Механическая,\n        at: Автоматическая,\n        amt: Автоматизированная механика (робот),\n        cvt: Вариатор",
+                "type": "string",
+                "enum": [
+                    "mt",
+                    "at",
+                    "amt",
+                    "cvt"
+                ],
+                "x-enum-varnames": [
+                    "MT",
+                    "AT",
+                    "AMT",
+                    "CVT"
+                ]
+            },
             "UserRole": {
                 "description": "Роль пользователя\n        student: Ученик,\n        instructor: Инструктор,\n        admin: Админ",
                 "type": "string",
@@ -110,6 +192,71 @@
                     "password": {
                         "type": "string",
                         "example": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "CarResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "brand": {
+                        "type": "string",
+                        "example": "Lada"
+                    },
+                    "model": {
+                        "type": "string",
+                        "example": "Kalina"
+                    },
+                    "color": {
+                        "type": "string",
+                        "example": "Портвейн"
+                    },
+                    "state_number": {
+                        "type": "string",
+                        "example": "А100А099"
+                    },
+                    "transmission": {
+                        "$ref": "#/components/schemas/Transmission"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "instructor_id": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "InstructorResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "bio": {
+                        "type": "string",
+                        "example": "О себе"
+                    },
+                    "experience": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "rating": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 3
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "active_car": {
+                        "$ref": "#/components/schemas/CarResource"
                     }
                 },
                 "type": "object"
@@ -141,6 +288,29 @@
                     }
                 },
                 "type": "object"
+            },
+            "SlotResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "start_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01 21:00:00"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/SlotStatus"
+                    },
+                    "instructor": {
+                        "$ref": "#/components/schemas/InstructorResource"
+                    },
+                    "car": {
+                        "$ref": "#/components/schemas/CarResource"
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -156,6 +326,10 @@
         {
             "name": "profile",
             "description": "profile"
+        },
+        {
+            "name": "slots",
+            "description": "slots"
         }
     ]
 }
