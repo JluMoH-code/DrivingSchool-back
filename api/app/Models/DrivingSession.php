@@ -40,6 +40,8 @@ class DrivingSession extends Model
     protected $fillable = [
         'score',
         'status',
+        'student_id',
+        'slot_id',
     ];
 
     protected function casts(): array
