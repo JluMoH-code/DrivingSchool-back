@@ -232,6 +232,34 @@
                 },
                 "type": "object"
             },
+            "CarSlotResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "brand": {
+                        "type": "string",
+                        "example": "Lada"
+                    },
+                    "model": {
+                        "type": "string",
+                        "example": "Kalina"
+                    },
+                    "color": {
+                        "type": "string",
+                        "example": "Портвейн"
+                    },
+                    "state_number": {
+                        "type": "string",
+                        "example": "А100А099"
+                    },
+                    "transmission": {
+                        "$ref": "#/components/schemas/Transmission"
+                    }
+                },
+                "type": "object"
+            },
             "InstructorResource": {
                 "properties": {
                     "id": {
@@ -257,6 +285,28 @@
                     },
                     "active_car": {
                         "$ref": "#/components/schemas/CarResource"
+                    }
+                },
+                "type": "object"
+            },
+            "InstructorSlotResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "bio": {
+                        "type": "string",
+                        "example": "О себе"
+                    },
+                    "experience": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "rating": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 3
                     }
                 },
                 "type": "object"
@@ -304,10 +354,10 @@
                         "$ref": "#/components/schemas/SlotStatus"
                     },
                     "instructor": {
-                        "$ref": "#/components/schemas/InstructorResource"
+                        "$ref": "#/components/schemas/InstructorSlotResource"
                     },
                     "car": {
-                        "$ref": "#/components/schemas/CarResource"
+                        "$ref": "#/components/schemas/CarSlotResource"
                     }
                 },
                 "type": "object"
