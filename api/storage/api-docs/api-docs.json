@@ -84,6 +84,76 @@
                 }
             }
         },
+        "/api/slots/{slotId}/reserve": {
+            "post": {
+                "tags": [
+                    "slots"
+                ],
+                "summary": "Резервирование слота для авторизованного пользователя",
+                "operationId": "6fcccf19b133250d53f9d1a71ad7a83f",
+                "parameters": [
+                    {
+                        "name": "slotId",
+                        "in": "path",
+                        "description": "ID слота",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 42
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Запись на вождение",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DrivingSessionResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Слот недоступен или с начала занятия прошло более 1 часа!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SlotNotAvailableException"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/SlotStartTimeHasAlreadyPastException"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Невозможно забронировать слот!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserNotActiveException"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Слот не найден!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SlotNotFoundException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/slots": {
             "get": {
                 "tags": [
@@ -183,6 +253,46 @@
                     "ADMIN"
                 ]
             },
+            "SlotNotAvailableException": {
+                "description": "Ответ на ошибку SlotNotAvailableException",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Невозможно забронировать слот (возможно, его уже кто-то забронировал)!"
+                    }
+                },
+                "type": "object"
+            },
+            "SlotNotFoundException": {
+                "description": "Ответ на ошибку SlotNotFoundException",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Слот не найден!"
+                    }
+                },
+                "type": "object"
+            },
+            "SlotStartTimeHasAlreadyPastException": {
+                "description": "Ответ на ошибку SlotStartTimeHasAlreadyPastException",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Невозможно забронировать слот (прошло более 1 часа с начала занятия)!"
+                    }
+                },
+                "type": "object"
+            },
+            "UserNotActiveException": {
+                "description": "Ответ на ошибку UserNotActiveException",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Невозможно забронировать слот!"
+                    }
+                },
+                "type": "object"
+            },
             "AuthRequest": {
                 "properties": {
                     "pernumber": {
@@ -256,6 +366,30 @@
                     },
                     "transmission": {
                         "$ref": "#/components/schemas/Transmission"
+                    }
+                },
+                "type": "object"
+            },
+            "DrivingSessionResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "score": {
+                        "type": "integer",
+                        "example": "5"
+                    },
+                    "status": {
+                        "$ref": "#components/schemas/SlotStatus"
+                    },
+                    "slot_id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "student_id": {
+                        "type": "integer",
+                        "example": "1"
                     }
                 },
                 "type": "object"
