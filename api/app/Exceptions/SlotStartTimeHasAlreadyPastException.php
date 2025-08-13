@@ -11,11 +11,11 @@ use OpenApi\Attributes as OA;
         new OA\Property(
             property: "message",
             type: "string",
-            example: "Невозможно забронировать слот (прошло более 1 часа с начала занятия)!"
+            example: "Прошло более 1 часа с начала занятия!"
         ),
     ],
 )]
 class SlotStartTimeHasAlreadyPastException extends Exception
 {
-    protected $message = "Невозможно забронировать слот (прошло более 1 часа с начала занятия)!";
+    protected $message = "Прошло более 1 часа с начала занятия!";
 }
