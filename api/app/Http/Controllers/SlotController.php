@@ -19,7 +19,7 @@ class SlotController extends Controller
         responses: [
             new OA\Response(
                 response: 200,
-                description: 'Список задач',
+                description: 'Список слотов',
                 content: new OA\JsonContent(
                     type: 'array',
                     items: new OA\Items(ref: '#/components/schemas/SlotResource')
