@@ -32,9 +32,12 @@ class ReservationSlotService
         $user = $request->user();
         if (!$user->is_active) throw new UserNotActiveException();
 
-        $drivingSession = DrivingSession::create([
+        $drivingSession = DrivingSession::firstOrCreate([
             'student_id' => $user->id,
             'slot_id' => $slot->id,
+        ]);
+
+        $drivingSession->update([
             'status' => DrivingSessionStatus::RESERVATION,
         ]);
 
