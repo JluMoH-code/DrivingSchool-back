@@ -319,7 +319,7 @@
                 "tags": [
                     "slots"
                 ],
-                "summary": "Отмена резервирования слота для пользователя",
+                "summary": "Отмена резервирования слота для пользователя (только для админа)",
                 "operationId": "68303c8e2d369555bdf14bdd70e95345",
                 "parameters": [
                     {
@@ -401,6 +401,89 @@
                 ],
                 "summary": "Показ всех слотов",
                 "operationId": "1520c9aae027b84cd6086f13a2b06449",
+                "parameters": [
+                    {
+                        "name": "available_only",
+                        "in": "query",
+                        "description": "Показывать только доступные слоты",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "from_date",
+                        "in": "query",
+                        "description": "Начальная дата (формат Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2025-08-14"
+                        }
+                    },
+                    {
+                        "name": "to_date",
+                        "in": "query",
+                        "description": "Конечная дата (формат Y-m-d)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2025-08-24"
+                        }
+                    },
+                    {
+                        "name": "from_time",
+                        "in": "query",
+                        "description": "Начальное время (формат H:i)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "08:00"
+                        }
+                    },
+                    {
+                        "name": "to_time",
+                        "in": "query",
+                        "description": "Конечное время (формат H:i)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "10:00"
+                        }
+                    },
+                    {
+                        "name": "instructor_ids",
+                        "in": "query",
+                        "description": "Список ID инструкторов",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1,2,3"
+                        }
+                    },
+                    {
+                        "name": "car_ids",
+                        "in": "query",
+                        "description": "Список ID автомобилей",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1,2,3"
+                        }
+                    },
+                    {
+                        "name": "transmissions",
+                        "in": "query",
+                        "description": "Типы трансмиссий",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "mt,amt"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Список слотов",
