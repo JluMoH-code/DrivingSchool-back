@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SlotsListRequest;
 use App\Http\Resources\SlotResource;
-use App\Providers\SlotService;
+use App\Services\SlotService;
 use OpenApi\Attributes as OA;
 
 class SlotController extends Controller

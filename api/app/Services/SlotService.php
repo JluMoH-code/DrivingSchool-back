@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Services;
 
 use App\Enums\SlotStatus;
 use App\Http\Requests\SlotsListRequest;
