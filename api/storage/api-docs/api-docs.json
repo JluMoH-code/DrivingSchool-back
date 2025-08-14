@@ -500,6 +500,52 @@
                     }
                 }
             }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Показ всех пользователей",
+                "operationId": "01d7fd6c4dc3dab8b85740d879f5472c",
+                "parameters": [
+                    {
+                        "name": "available_only",
+                        "in": "query",
+                        "description": "Только активные пользователи.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "roles",
+                        "in": "query",
+                        "description": "Фильтр по ролям пользователей.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "student,instructor"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список пользователей",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -848,6 +894,35 @@
                     }
                 },
                 "type": "object"
+            },
+            "UserResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "pernumber": {
+                        "type": "number",
+                        "example": "100000000"
+                    },
+                    "phone": {
+                        "type": "number",
+                        "example": "79999999999"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Иванов Иван"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "student"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -867,6 +942,10 @@
         {
             "name": "slots",
             "description": "slots"
+        },
+        {
+            "name": "users",
+            "description": "users"
         }
     ]
 }
