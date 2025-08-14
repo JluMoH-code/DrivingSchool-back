@@ -10,3 +10,5 @@ Route::get('/slots', [SlotController::class, 'list'])->middleware('auth');
 
 Route::post('/slots/{slotId}/reserve', [ReservationSlotController::class, 'reserveSlotForSelf'])->middleware('role:student');
 Route::put('/slots/{slotId}/cancel', [ReservationSlotController::class, 'cancelReservation'])->middleware('role:student');
+Route::post('/slots/{slotId}/reserve-for/{userId}', [ReservationSlotController::class, 'reserveSlotForUser'])->middleware('role:admin');
+Route::put('/slots/{slotId}/cancel-for/{userId}', [ReservationSlotController::class, 'cancelReservationForUser'])->middleware('role:admin');

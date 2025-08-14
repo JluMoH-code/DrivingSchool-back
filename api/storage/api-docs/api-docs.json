@@ -224,6 +224,176 @@
                 }
             }
         },
+        "/api/slots/{slotId}/reserve-for/{userId}": {
+            "post": {
+                "tags": [
+                    "slots"
+                ],
+                "summary": "Резервирование слота для пользователя (только для админа)",
+                "operationId": "97ebf8d86f84d1b2605c7be7a781331a",
+                "parameters": [
+                    {
+                        "name": "slotId",
+                        "in": "path",
+                        "description": "ID слота",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 42
+                        }
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 42
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Запись на вождение",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DrivingSessionResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Слот недоступен!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SlotNotAvailableException"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Невозможно забронировать слот!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserNotActiveException"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Слот или пользователь не найден!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SlotNotFoundException"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/UserNotFoundException"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Пользователь не является студентом!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserNotStudentException"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/slots/{slotId}/cancel-for/{userId}": {
+            "put": {
+                "tags": [
+                    "slots"
+                ],
+                "summary": "Отмена резервирования слота для пользователя",
+                "operationId": "68303c8e2d369555bdf14bdd70e95345",
+                "parameters": [
+                    {
+                        "name": "slotId",
+                        "in": "path",
+                        "description": "ID слота",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 42
+                        }
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 42
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Слот",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SlotResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Слот закрыт или с начала занятия прошло более 1 часа!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SlotAlreadyCompletedException"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Невозможно забронировать слот!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserNotActiveException"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Слот или пользователь не найден!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SlotNotFoundException"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/UserNotFoundException"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/slots": {
             "get": {
                 "tags": [
@@ -233,7 +403,7 @@
                 "operationId": "1520c9aae027b84cd6086f13a2b06449",
                 "responses": {
                     "200": {
-                        "description": "Список задач",
+                        "description": "Список слотов",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -369,6 +539,26 @@
                     "message": {
                         "type": "string",
                         "example": "Невозможно забронировать слот!"
+                    }
+                },
+                "type": "object"
+            },
+            "UserNotFoundException": {
+                "description": "Ответ на ошибку UserNotActiveException",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Пользователь не найден!"
+                    }
+                },
+                "type": "object"
+            },
+            "UserNotStudentException": {
+                "description": "Ответ на ошибку UserNotStudentException",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Пользователь не является студентом!"
                     }
                 },
                 "type": "object"
